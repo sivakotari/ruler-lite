@@ -1,0 +1,26 @@
+#complex_id {
+    height: 15px;
+    width: 100vw;
+    background: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    z-index: 999999999;
+}
+#complex_id:hover {
+    cursor: crosshair;
+}
+#rule_id {
+    width: 100vw;
+    height: 1px;
+    background-color: rgba(46,148,173,0.7);
+    position: absolute;
+    top: 0;
+}
+
+.rule {
+    width: 100vw;
+    height: 1px;
+    background-color: rgba(46,148,173,0.7);
+    position: absolute;
+    top: 0;
+}
