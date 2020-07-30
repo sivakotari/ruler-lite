@@ -2,7 +2,6 @@
 window.addEventListener('DOMContentLoaded', event => {
     let idSet = new Set();
 
-
     const genId = () => Math.ceil(Math.random() * (1000 - 100) + 100);
 
     const uniqueId = () => {
@@ -25,8 +24,8 @@ window.addEventListener('DOMContentLoaded', event => {
         return element;
     };
 
-    const removeEle = (parent,child) => {
-        parent.removeChild(child);
+    const removeNode = (node) => {
+        node.remove(node);
     };
 
     const hasClass = (event,cls) => {
@@ -34,43 +33,67 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
     const rulerElement = (event) => {
-        if(hasClass(event,'rule')) {
+        const axis = event.currentTarget.id.split('__')[1];
+        const cls = 'rule__' + axis;
+        if(hasClass(event,cls)) {
             return event.target;
         }
         else{
-            const id = uniqueId();
-            return createEle({element:'div',class:'rule',id});
+            const uid = uniqueId();
+            return createEle({element:'div',class:cls,uid});
         }
     };
 
     const barMousedown = () => {
-        let {event} = this;
+        const {event} = this;
         event.preventDefault();
         const rule = rulerElement(event);
-        rule.ondblclick = () => removeEle(bar,rule);
-        document.onmouseup = () => barMouseUp();
+        rule.ondblclick = () => removeNode(rule);
+        document.onmouseup = () => barMouseUp(rule);
         document.onmousemove = () => barMouseDrag(rule);
     };
 
     const barMouseDrag = (rule) => {
-        let {event} = this;
+        const {event} = this;
         event.preventDefault();
-        bar.appendChild(rule);
-        rule.style.top = `${event.clientY}px`;
+        const axis = rule.className.split('__')[1];
+        const id = 'ruler-lite__' + axis;
+        const element = document.getElementById(id);
+        element.appendChild(rule);
+        if(axis === 'x')
+            rule.style.top = `${event.clientY}px`;
+        else
+            rule.style.left = `${event.clientX}px`;
         document.onmouseup = () => barMouseUp(rule);
     };
 
     const barMouseUp = (rule) => {
-        let {event} = this;
-        if(rule && event.clientY <= bar.clientHeight){
-            removeEle(bar,rule);
+        const {event} = this;
+        const axis = rule.className.split('__')[1];
+        const id = 'ruler-lite__' + axis;
+        const element = document.getElementById(id);
+        if(rule) {
+            
+        }
+        if(axis === 'x'){
+            if(rule && event.clientY <= element.clientHeight){
+                removeNode(rule);
+            }   
+        }
+        else{
+            if(rule && event.clientX <= element.clientWidth){
+                removeNode(rule);
+            }
         }
         document.onmouseup = null;
         document.onmousemove = null;    
     };
     
     const body = document.querySelector('body');
-    const bar  = createEle({element:'div',id:'complex_id'});
-    body.appendChild(bar);
-    bar.onmousedown = barMousedown;
+    const barX  = createEle({element:'div',id:'ruler-lite__x'});
+    const barY  = createEle({element:'div',id:'ruler-lite__y'});
+    body.appendChild(barX);
+    body.appendChild(barY);
+    barX.onmousedown = barMousedown;
+    barY.onmousedown = barMousedown;
 });

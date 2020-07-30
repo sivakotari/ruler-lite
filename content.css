@@ -1,26 +1,41 @@
-#complex_id {
-    height: 15px;
-    width: 100vw;
+
+#ruler-lite__x, #ruler-lite__y {
     background: rgba(0,0,0,0.7);
     position: fixed;
-    top: 0;
     z-index: 999999999;
 }
-#complex_id:hover {
+
+#ruler-lite__x:hover, #ruler-lite__y:hover {
     cursor: crosshair;
 }
-#rule_id {
+
+
+#ruler-lite__x {
+    height: 15px;
     width: 100vw;
-    height: 1px;
-    background-color: rgba(46,148,173,0.7);
-    position: absolute;
     top: 0;
 }
 
-.rule {
-    width: 100vw;
-    height: 1px;
+
+#ruler-lite__y {
+    height: 100vh;
+    width: 15px;
+    left: 0;
+}
+
+.rule__x , .rule__y {
     background-color: rgba(46,148,173,0.7);
     position: absolute;
+}
+
+.rule__x {
+    width: 100vw;
+    height: 1px;
     top: 0;
+}
+
+.rule__y {
+    width: 1px;
+    height: 100vw;
+    left: 0;
 }
